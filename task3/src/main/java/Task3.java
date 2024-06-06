@@ -2,8 +2,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.*;
 
 public class Task3 {
@@ -14,24 +14,25 @@ public class Task3 {
     public static void main(String[] args) {
 
 
-        Scanner input = new Scanner(System.in);
-        System.out.println("Enter Tests path name: ");
-        String testsPathName = input.nextLine();
-        System.out.println("Enter Values path name: ");
-        String valuesPathName = input.nextLine();
+        String testsPathName = args[0];
+        String valuesPathName = args[1];
+        String reportPathName = args[2];
 
-        File fileTests = new File(testsPathName);
-        File fileValues = new File(valuesPathName);
-
-        //read file val
-        Scanner valReader = null;
+        FileReader fileTests;
+        Scanner valReader;
         try {
+            fileTests = new FileReader(testsPathName);
+            FileReader fileValues = new FileReader(valuesPathName);
+
+            //read file val
+
             valReader = new Scanner(fileValues);
-        } catch (FileNotFoundException e) {
+        }
+        catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
         //makes string val
-        String line = "";
+        String line;
         String jsonLineVal = "";
         while (valReader.hasNextLine()) {
             line = valReader.nextLine();
@@ -40,12 +41,8 @@ public class Task3 {
 
 
         //read file test
-        Scanner testReader = null;
-        try {
-            testReader = new Scanner(fileTests);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        Scanner testReader;
+        testReader = new Scanner(fileTests);
         //makes string test
         String jsonLineTest = "";
         while (testReader.hasNextLine()) {
@@ -63,13 +60,13 @@ public class Task3 {
         List<JsonNode> znachALL = new ArrayList<>();
 
 
-        JsonNode jsonNodeV = null;
+        JsonNode jsonNodeV;
         try {
             jsonNodeV = objectMapper.readTree(jsonLineVal);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        JsonNode jsonNodeT = null;
+        JsonNode jsonNodeT;
         try {
             jsonNodeT = objectMapper.readTree(jsonLineTest);
         } catch (JsonProcessingException e) {
@@ -79,15 +76,10 @@ public class Task3 {
         getKeys(jsonNodeV, keysV);
         System.out.println(keysT);
         System.out.println(keysV);
-        getValues(jsonNodeT,znachT);
-        getValues(jsonNodeV,znachV);
+        getValues(jsonNodeT, znachT);
+        getValues(jsonNodeV, znachV);
         System.out.println(znachT);
         System.out.println(znachV);
-
-
-
-
-
     }
 
     public static void getKeys(JsonNode jsonNode, List<String> keys) {
@@ -95,7 +87,7 @@ public class Task3 {
             Iterator<Map.Entry<String, JsonNode>> fields = jsonNode.fields();
             fields.forEachRemaining(field -> {
                 keys.add(field.getKey());
-                getKeys((JsonNode) field.getValue(), keys);
+                getKeys(field.getValue(), keys);
             });
         } else if (jsonNode.isArray()) {
             ArrayNode arrayField = (ArrayNode) jsonNode;
@@ -103,8 +95,6 @@ public class Task3 {
                 getKeys(node, keys);
             });
         }
-
-
     }
 
     public static void getValues(JsonNode jsonNode, List<JsonNode> znach) {
@@ -112,7 +102,7 @@ public class Task3 {
             Iterator<Map.Entry<String, JsonNode>> fields = jsonNode.fields();
             fields.forEachRemaining(field -> {
                 znach.add(field.getValue());
-                getValues((JsonNode) field.getValue(), znach);
+                getValues(field.getValue(), znach);
             });
         } else if (jsonNode.isArray()) {
             ArrayNode arrayField = (ArrayNode) jsonNode;
@@ -120,7 +110,5 @@ public class Task3 {
                 getValues(node, znach);
             });
         }
-
-
     }
 }
