@@ -1,5 +1,4 @@
 import java.util.Arrays;
-import java.util.Scanner;
 
 public class task1 {
 
@@ -8,10 +7,13 @@ public class task1 {
 
         Scanner sc = new Scanner(System.in);
 
-            System.out.print("Enter array elements: ");
-            int n = sc.nextInt();
-            System.out.print("Enter interval length: ");
-            int m = sc.nextInt();
+            int [] nums = new int[args.length];
+        for (int i = 0; i < args.length; i++) {
+            nums[i] = Integer.parseInt(args[i]);
+        }
+
+            int n = nums[0];
+            int m = nums[1];
 
             int[] array = new int[n];
             Arrays.setAll(array, i -> ++i);
