@@ -1,4 +1,4 @@
-import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +21,6 @@ public class Task4 {
             avr = nums[n / 2];
         }
 
-
         for(int i=0; i< nums.length; i++){
             while (nums[i]!= avr) {
                 if (nums[i] < avr) {
@@ -35,28 +34,22 @@ public class Task4 {
                 else nums[i] = avr;
             }
         }
-
         return counter;
-
     }
 
     public static void main(String[] args) {
 
-
         List<Integer> numbers = new ArrayList<>();
         try {
-            System.out.print("Enter the file path: ");
-            Scanner input = new Scanner(System.in);
-            String filePath = input.nextLine();
-            File file = new File(filePath);
+            String fileName = args[0];
+            FileReader fileReader = new FileReader(fileName);
 
-            Scanner sc = new Scanner(file);
+            Scanner sc = new Scanner(fileReader);
             while (sc.hasNextLine()) {
                 String line = sc.nextLine().trim();
                 int i = Integer.parseInt (line);
                 numbers.add(i);
                 }
-            input.close();
         }
             catch(Exception ex){
                 ex.printStackTrace();
@@ -66,4 +59,3 @@ public class Task4 {
 
         }
     }
-
