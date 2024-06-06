@@ -9,12 +9,10 @@ public class task2 {
 
     public static void main(String[] args) {
 
-        //Accepts files path from console
-        Scanner input = new Scanner(System.in);
-        System.out.println("Enter the Circle data path name: ");
-        String cPathName = input.nextLine();
-        System.out.println("Enter the Dot data path name: ");
-        String dPathName = input.nextLine();
+        //Accepts files path
+        String cPathName = args[0];
+        String dPathName = args[1];
+
         Scanner reader;
         Scanner readerTwo;
         try {
@@ -35,7 +33,7 @@ public class task2 {
             line = reader.nextFloat();
             xyr.add(line);
         }
-        input.close();
+
         //define circle coordinates
         float cx = xyr.get(0);
         float cy = xyr.get(1);
@@ -49,7 +47,7 @@ public class task2 {
             lineTwo = readerTwo.nextFloat();
             xy.add(lineTwo);
         }
-        input.close();
+
         //define dot coordinates
         float dx;
         float dy;
@@ -68,11 +66,6 @@ public class task2 {
             else {
                 System.out.println(2);
             }
-
         }
-
-
     }
-
-    }
-
+   }
