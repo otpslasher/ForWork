@@ -7,11 +7,14 @@ import java.util.Scanner;
 public class task2 {
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DotLimitException {
+
+
 
         //Accepts files path
         String cPathName = args[0];
         String dPathName = args[1];
+
 
         Scanner reader;
         Scanner readerTwo;
@@ -34,6 +37,7 @@ public class task2 {
             xyr.add(line);
         }
 
+
         //define circle coordinates
         float cx = xyr.get(0);
         float cy = xyr.get(1);
@@ -47,6 +51,8 @@ public class task2 {
             lineTwo = readerTwo.nextFloat();
             xy.add(lineTwo);
         }
+        if(xy.size()>200) throw new DotLimitException("Too many dot coordinates");
+        if(xy.size()<1) throw new DotLimitException("Not enough dot coordinates");
 
         //define dot coordinates
         float dx;
@@ -68,4 +74,10 @@ public class task2 {
             }
         }
     }
-   }
+
+    static class DotLimitException extends Exception{
+        public DotLimitException(String message){
+            super(message);
+        }
+    }
+}
